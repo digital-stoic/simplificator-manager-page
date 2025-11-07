@@ -28,14 +28,9 @@ const Index = () => {
               Profile
             </Button>
           ) : (
-            <>
-              <Button variant="ghost" onClick={() => navigate("/login")}>
-                Login
-              </Button>
-              <Button onClick={() => navigate("/signup")}>
-                Sign Up
-              </Button>
-            </>
+            <Button onClick={() => navigate("/login")}>
+              Login
+            </Button>
           )}
         </div>
       </div>

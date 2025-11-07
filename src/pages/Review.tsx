@@ -26,21 +26,14 @@ const Review = () => {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const getUserId = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast({
-          title: "Authentication Required",
-          description: "Please login to submit a review.",
-          variant: "destructive"
-        });
-        navigate("/login");
-        return;
+      if (user) {
+        setUserId(user.id);
       }
-      setUserId(user.id);
     };
-    checkAuth();
-  }, [navigate, toast]);
+    getUserId();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
