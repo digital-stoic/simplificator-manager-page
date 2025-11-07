@@ -8,6 +8,7 @@ import { ArrowLeft, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const reviewSchema = z.object({
   code: z.string().trim().min(10, { message: "Code snippet must be at least 10 characters" }).max(5000, { message: "Code snippet must be less than 5000 characters" }),
@@ -22,7 +23,7 @@ const Review = () => {
   const [showResult, setShowResult] = useState(false);
   const [errors, setErrors] = useState<{ code?: string; description?: string }>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate form
@@ -44,6 +45,31 @@ const Review = () => {
     }
     
     setErrors({});
+    
+    // Save to database (mock score for now)
+    const mockScore = Math.floor(Math.random() * 5) + 6; // Random score 6-10 for demo
+    
+    const { error } = await supabase.from("reviews").insert({
+      title: description.substring(0, 100),
+      code_snippet: code,
+      description: description,
+      score: mockScore
+    });
+    
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save review. Please try again.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    toast({
+      title: "Review saved!",
+      description: "Your code has been analyzed."
+    });
+    
     setShowResult(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

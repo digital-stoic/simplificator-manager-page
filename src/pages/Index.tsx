@@ -87,22 +87,28 @@ const Index = () => {
             </CardContent>
           </Card>
 
-          {/* Feature 3: Best Practices Library */}
-          <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-600">
+          {/* Feature 3: Community Dashboard */}
+          <Card 
+            className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-600 cursor-pointer"
+            onClick={() => navigate("/dashboard")}
+          >
             <CardHeader>
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                 <BookOpen className="w-6 h-6 text-primary" />
               </div>
-              <CardTitle className="text-2xl">Best Practices Library</CardTitle>
+              <CardTitle className="text-2xl">Community Dashboard</CardTitle>
               <CardDescription className="text-base">
-                Learn YAGNI, KISS, MVP
+                See real reviews & learn
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">
-                Master the art of simplicity. YAGNI = You Ain't Gonna Need It. 
-                Ship fast, learn fast. C'est du lourd. ✅
+              <p className="text-muted-foreground mb-4">
+                Browse recent code reviews from the community. Learn from real examples. 
+                C'est du lourd. ✅
               </p>
+              <Button variant="outline" size="sm" className="w-full">
+                View Dashboard
+              </Button>
             </CardContent>
           </Card>
         </div>
