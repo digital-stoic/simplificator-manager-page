@@ -1,8 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Brain, MessageCircle, BookOpen, Waves } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
       {/* Hero Section */}
@@ -26,7 +29,11 @@ const Index = () => {
           </p>
           
           <div className="pt-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
-            <Button size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all">
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
+              onClick={() => navigate("/review")}
+            >
               Try it now 🏄
             </Button>
           </div>
@@ -104,7 +111,11 @@ const Index = () => {
           <p className="text-lg text-muted-foreground">
             Join developers who choose simplicity over complexity. Et ouais. 😎
           </p>
-          <Button size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all">
+          <Button 
+            size="lg" 
+            className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
+            onClick={() => navigate("/review")}
+          >
             Try it now - It's free 🏄
           </Button>
         </div>
