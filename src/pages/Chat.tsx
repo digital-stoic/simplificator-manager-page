@@ -217,8 +217,18 @@ const Chat = () => {
                       : "bg-muted text-foreground"
                   }`}
                 >
-                  <p className="text-sm leading-relaxed">{message.content}</p>
-                  <span className="text-xs opacity-70 mt-1 block">
+                  {message.role === "assistant" ? (
+                    <div className="space-y-3">
+                      {message.content.split(/\.\s+/).filter(s => s.trim()).map((sentence, idx) => (
+                        <p key={idx} className="text-sm leading-relaxed pl-3 border-l-2 border-primary/30">
+                          {sentence.trim()}{sentence.trim().endsWith('.') ? '' : '.'}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm leading-relaxed">{message.content}</p>
+                  )}
+                  <span className="text-xs opacity-70 mt-2 block">
                     {message.timestamp.toLocaleTimeString([], { 
                       hour: '2-digit', 
                       minute: '2-digit' 
