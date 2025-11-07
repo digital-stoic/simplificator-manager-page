@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,17 +23,6 @@ const Review = () => {
   const [showResult, setShowResult] = useState(false);
   const [aiResult, setAiResult] = useState<{ score: number; title: string; suggestions: string[] } | null>(null);
   const [errors, setErrors] = useState<{ code?: string; description?: string; general?: string }>({});
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getUserId = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUserId(user.id);
-      }
-    };
-    getUserId();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,23 +75,13 @@ const Review = () => {
       setAiResult(functionResult);
 
       // Save to Supabase
-      if (!userId) {
-        toast({
-          title: "Error",
-          description: "You must be logged in to save reviews.",
-          variant: "destructive"
-        });
-        return;
-      }
-
       const { error: dbError } = await supabase
         .from('reviews')
         .insert({
           title: functionResult.title || description.substring(0, 100),
           code_snippet: code,
           description: description,
-          score: functionResult.score,
-          user_id: userId
+          score: functionResult.score
         });
 
       if (dbError) {

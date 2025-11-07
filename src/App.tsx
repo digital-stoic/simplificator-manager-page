@@ -7,11 +7,7 @@ import Index from "./pages/Index";
 import Review from "./pages/Review";
 import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
-import Login from "./pages/Login";
-import CreateTestUser from "./pages/CreateTestUser";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -23,33 +19,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/review" element={<Review />} />
           <Route path="/chat" element={<Chat />} />
-          <Route path="/create-test-user" element={<CreateTestUser />} />
-          <Route 
-            path="/review" 
-            element={
-              <ProtectedRoute>
-                <Review />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/profile" 
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

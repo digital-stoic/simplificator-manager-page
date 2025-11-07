@@ -1,42 +1,15 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, MessageCircle, BookOpen, Waves, User } from "lucide-react";
+import { Brain, MessageCircle, BookOpen, Waves } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setIsAuthenticated(!!user);
-    };
-    checkAuth();
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
-      {/* Top Navigation */}
-      <div className="container mx-auto px-4 pt-6">
-        <div className="flex justify-end gap-2">
-          {isAuthenticated ? (
-            <Button variant="outline" onClick={() => navigate("/profile")} className="gap-2">
-              <User className="w-4 h-4" />
-              Profile
-            </Button>
-          ) : (
-            <Button onClick={() => navigate("/login")}>
-              Login
-            </Button>
-          )}
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-12 pb-16 text-center">
+      <section className="container mx-auto px-4 pt-20 pb-16 text-center">
         <div className="space-y-6 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 text-primary animate-in fade-in slide-in-from-bottom-4 duration-700">
             <Waves className="w-8 h-8" />

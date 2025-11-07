@@ -14,27 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      profiles: {
-        Row: {
-          created_at: string
-          email: string
-          id: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          id: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          id?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       reviews: {
         Row: {
           code_snippet: string
@@ -43,7 +22,6 @@ export type Database = {
           id: string
           score: number
           title: string
-          user_id: string | null
         }
         Insert: {
           code_snippet: string
@@ -52,7 +30,6 @@ export type Database = {
           id?: string
           score: number
           title: string
-          user_id?: string | null
         }
         Update: {
           code_snippet?: string
@@ -61,7 +38,6 @@ export type Database = {
           id?: string
           score?: number
           title?: string
-          user_id?: string | null
         }
         Relationships: []
       }
