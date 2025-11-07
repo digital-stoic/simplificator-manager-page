@@ -63,7 +63,10 @@ const Index = () => {
           </Card>
 
           {/* Feature 2: Simplificator Chatbot */}
-          <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500">
+          <Card 
+            className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500 cursor-pointer"
+            onClick={() => navigate("/chat")}
+          >
             <CardHeader>
               <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
                 <MessageCircle className="w-6 h-6 text-accent" />
@@ -74,10 +77,13 @@ const Index = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-4">
                 Ask anything. Get surf-vibe wisdom. "Faut savoir rider la vague du simple." 
                 We keep it real. 🌊
               </p>
+              <Button variant="outline" size="sm" className="w-full">
+                Start Chat
+              </Button>
             </CardContent>
           </Card>
 
