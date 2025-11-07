@@ -44,7 +44,10 @@ const Index = () => {
       <section className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Feature 1: AI Code Review */}
-          <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400">
+          <Card 
+            className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400 cursor-pointer"
+            onClick={() => navigate("/review")}
+          >
             <CardHeader>
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                 <Brain className="w-6 h-6 text-primary" />
