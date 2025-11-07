@@ -21,7 +21,8 @@ const Review = () => {
   const [code, setCode] = useState("");
   const [description, setDescription] = useState("");
   const [showResult, setShowResult] = useState(false);
-  const [errors, setErrors] = useState<{ code?: string; description?: string }>({});
+  const [aiResult, setAiResult] = useState<{ score: number; title: string; suggestions: string[] } | null>(null);
+  const [errors, setErrors] = useState<{ code?: string; description?: string; general?: string }>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,37 +46,74 @@ const Review = () => {
     }
     
     setErrors({});
-    
-    // Save to database (mock score for now)
-    const mockScore = Math.floor(Math.random() * 5) + 6; // Random score 6-10 for demo
-    
-    const { error } = await supabase.from("reviews").insert({
-      title: description.substring(0, 100),
-      code_snippet: code,
-      description: description,
-      score: mockScore
+
+    toast({
+      title: "Analyzing...",
+      description: "The Simplificator Manager is reviewing your code..."
     });
-    
-    if (error) {
+
+    try {
+      console.log('Calling simplify-code edge function...');
+      
+      // Call the edge function
+      const { data: functionResult, error: functionError } = await supabase.functions.invoke('simplify-code', {
+        body: { code, description }
+      });
+
+      if (functionError) {
+        console.error('Edge function error:', functionError);
+        setErrors({ general: 'AI analysis failed. Please try again.' });
+        toast({
+          title: "Error",
+          description: "Failed to analyze code. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      console.log('AI result:', functionResult);
+      setAiResult(functionResult);
+
+      // Save to Supabase
+      const { error: dbError } = await supabase
+        .from('reviews')
+        .insert({
+          title: functionResult.title || description.substring(0, 100),
+          code_snippet: code,
+          description: description,
+          score: functionResult.score
+        });
+
+      if (dbError) {
+        console.error('Database error:', dbError);
+        toast({
+          title: "Warning",
+          description: "Analysis complete but failed to save to database.",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Review Complete!",
+          description: "Your code has been analyzed by the Simplificator Manager."
+        });
+      }
+
+      setShowResult(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      setErrors({ general: 'An unexpected error occurred.' });
       toast({
         title: "Error",
-        description: "Failed to save review. Please try again.",
+        description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
-      return;
     }
-    
-    toast({
-      title: "Review saved!",
-      description: "Your code has been analyzed."
-    });
-    
-    setShowResult(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const resetForm = () => {
     setShowResult(false);
+    setAiResult(null);
     setCode("");
     setDescription("");
     setErrors({});
@@ -104,20 +142,27 @@ const Review = () => {
           </p>
         </div>
 
-        {/* Mock AI Result */}
-        {showResult && (
-          <Card className="mb-8 border-destructive/50 animate-in fade-in slide-in-from-top-4 duration-500">
+        {/* AI Result */}
+        {showResult && aiResult && (
+          <Card className={`mb-8 animate-in fade-in slide-in-from-top-4 duration-500 ${
+            aiResult.score >= 7 ? 'border-destructive/50' : aiResult.score >= 4 ? 'border-yellow-500/50' : 'border-green-500/50'
+          }`}>
             <CardHeader>
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <Badge variant="destructive" className="text-lg px-4 py-1">
-                      Score: 8/10 🔴
+                    <Badge 
+                      variant={aiResult.score >= 7 ? "destructive" : aiResult.score >= 4 ? "secondary" : "default"}
+                      className="text-lg px-4 py-1"
+                    >
+                      Score: {aiResult.score}/10 {aiResult.score >= 7 ? '🔴' : aiResult.score >= 4 ? '🟡' : '✅'}
                     </Badge>
                   </div>
                   <CardTitle className="text-3xl flex items-center gap-2">
-                    <AlertCircle className="w-8 h-8 text-destructive" />
-                    This looks over-engineered 🔴
+                    <AlertCircle className={`w-8 h-8 ${
+                      aiResult.score >= 7 ? 'text-destructive' : aiResult.score >= 4 ? 'text-yellow-500' : 'text-green-500'
+                    }`} />
+                    {aiResult.title}
                   </CardTitle>
                 </div>
               </div>
@@ -125,45 +170,34 @@ const Review = () => {
             <CardContent className="space-y-6">
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-foreground">
-                  Respect pour l'ambition, but let's talk simplicity:
+                  {aiResult.score >= 7 
+                    ? "Respect pour l'ambition, but let's talk simplicity:" 
+                    : aiResult.score >= 4 
+                    ? "Pas mal, but could be simpler:"
+                    : "C'est du lourd! Simple and effective. 😎"}
                 </h3>
                 <div className="space-y-4">
-                  <Card className="bg-muted/50">
-                    <CardContent className="pt-6">
-                      <p className="text-foreground font-medium mb-2">💡 Question #1:</p>
-                      <p className="text-muted-foreground">
-                        Do you really need microservices for 10 users?
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-muted/50">
-                    <CardContent className="pt-6">
-                      <p className="text-foreground font-medium mb-2">🎯 Garage Mode Alternative:</p>
-                      <p className="text-muted-foreground">
-                        Start with a monolith, refactor later when needed. Ship fast, learn fast.
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-muted/50">
-                    <CardContent className="pt-6">
-                      <p className="text-foreground font-medium mb-2">🌊 Customer Truth:</p>
-                      <p className="text-muted-foreground">
-                        Customers want features, not fancy architecture. Faut savoir rider la vague du simple.
-                      </p>
-                    </CardContent>
-                  </Card>
+                  {aiResult.suggestions.map((suggestion, index) => (
+                    <Card key={index} className="bg-muted/50">
+                      <CardContent className="pt-6">
+                        <p className="text-foreground font-medium mb-2">
+                          {index === 0 ? '💡' : index === 1 ? '🎯' : '🌊'} Suggestion #{index + 1}:
+                        </p>
+                        <p className="text-muted-foreground">{suggestion}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
               </div>
 
               <div className="pt-4 border-t">
                 <p className="text-lg font-semibold text-foreground mb-2">
-                  YAGNI Reminder: You Ain't Gonna Need It
+                  {aiResult.score >= 7 ? 'YAGNI Reminder: You Ain\'t Gonna Need It' : 'Keep Riding the Wave 🏄'}
                 </p>
                 <p className="text-muted-foreground">
-                  Easy, relax. Build what you need today, not what you might need tomorrow. 
-                  Et ouais. 😎
+                  {aiResult.score >= 7 
+                    ? 'Easy, relax. Build what you need today, not what you might need tomorrow. Et ouais. 😎'
+                    : 'Ship fast, learn fast. Focus on customer value. C\'est du lourd.'}
                 </p>
               </div>
 
