@@ -2,3 +2,6 @@ project_id = "pateyodblzndiokzjzyk"
 
 [functions.simplify-code]
 verify_jwt = false
+
+[functions.create-test-user]
+verify_jwt = false

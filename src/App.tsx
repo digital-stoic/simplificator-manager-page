@@ -9,6 +9,7 @@ import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
+import CreateTestUser from "./pages/CreateTestUser";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/create-test-user" element={<CreateTestUser />} />
           <Route 
             path="/review" 
             element={
