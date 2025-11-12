@@ -13,24 +13,24 @@ const Index = () => {
         <div className="space-y-6 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 text-primary animate-in fade-in slide-in-from-bottom-4 duration-700">
             <Waves className="w-8 h-8" />
-            <span className="text-sm font-semibold uppercase tracking-wider">Simplificator Manager</span>
+            <span className="text-sm font-semibold uppercase tracking-wider">The Simplificator Manager</span>
           </div>
-          
+
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100">
-            Stop over-engineering,<br />
+            Stop over-engineering,
+            <br />
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               start shipping
             </span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
-            Your friendly AI coach that challenges complexity with kindness. 
-            Easy, relax. 😎
+            Your friendly AI coach that challenges complexity with kindness. Easy, relax. 😎
           </p>
-          
+
           <div className="pt-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
               onClick={() => navigate("/review")}
             >
@@ -44,7 +44,7 @@ const Index = () => {
       <section className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Feature 1: AI Code Review */}
-          <Card 
+          <Card
             className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400 cursor-pointer"
             onClick={() => navigate("/review")}
           >
@@ -53,20 +53,18 @@ const Index = () => {
                 <Brain className="w-6 h-6 text-primary" />
               </div>
               <CardTitle className="text-2xl">AI Code Review</CardTitle>
-              <CardDescription className="text-base">
-                Analyzes your architecture
-              </CardDescription>
+              <CardDescription className="text-base">Analyzes your architecture</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Get instant feedback on your tech stack. We'll tell you if you're building 
-                a spaceship when you need a skateboard. 🛹
+                Get instant feedback on your tech stack. We'll tell you if you're building a spaceship when you need a
+                skateboard. 🛹
               </p>
             </CardContent>
           </Card>
 
           {/* Feature 2: Simplificator Chatbot */}
-          <Card 
+          <Card
             className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500 cursor-pointer"
             onClick={() => navigate("/chat")}
           >
@@ -75,14 +73,11 @@ const Index = () => {
                 <MessageCircle className="w-6 h-6 text-accent" />
               </div>
               <CardTitle className="text-2xl">Simplificator Chatbot</CardTitle>
-              <CardDescription className="text-base">
-                Answers your questions
-              </CardDescription>
+              <CardDescription className="text-base">Answers your questions</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Ask anything. Get surf-vibe wisdom. "Faut savoir rider la vague du simple." 
-                We keep it real. 🌊
+                Ask anything. Get surf-vibe wisdom. "Faut savoir rider la vague du simple." We keep it real. 🌊
               </p>
               <Button variant="outline" size="sm" className="w-full">
                 Start Chat
@@ -91,7 +86,7 @@ const Index = () => {
           </Card>
 
           {/* Feature 3: Community Dashboard */}
-          <Card 
+          <Card
             className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-600 cursor-pointer"
             onClick={() => navigate("/dashboard")}
           >
@@ -100,14 +95,11 @@ const Index = () => {
                 <BookOpen className="w-6 h-6 text-primary" />
               </div>
               <CardTitle className="text-2xl">Community Dashboard</CardTitle>
-              <CardDescription className="text-base">
-                See real reviews & learn
-              </CardDescription>
+              <CardDescription className="text-base">See real reviews & learn</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Browse recent code reviews from the community. Learn from real examples. 
-                C'est du lourd. ✅
+                Browse recent code reviews from the community. Learn from real examples. C'est du lourd. ✅
               </p>
               <Button variant="outline" size="sm" className="w-full">
                 View Dashboard
@@ -120,14 +112,12 @@ const Index = () => {
       {/* Footer CTA */}
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-700">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Ready to embrace garage mode?
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">Ready to embrace garage mode?</h2>
           <p className="text-lg text-muted-foreground">
             Join developers who choose simplicity over complexity. Et ouais. 😎
           </p>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
             onClick={() => navigate("/review")}
           >
