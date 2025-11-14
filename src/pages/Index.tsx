@@ -18,7 +18,7 @@ const Index = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-100">
-            Stop over-engineering,
+            Stop Over-Engineering,
             <br />
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Start Shipping
