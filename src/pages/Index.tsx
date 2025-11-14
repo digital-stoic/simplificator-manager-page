@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Brain, MessageCircle, BookOpen, Waves } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+// MFB 42
 const Index = () => {
   const navigate = useNavigate();
 
